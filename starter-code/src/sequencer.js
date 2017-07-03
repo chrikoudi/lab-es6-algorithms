@@ -1,14 +1,14 @@
-var LetterSequence = function(){}
+class LetterSequence {
 
-LetterSequence.prototype.createSequence = function(sequence){
-  var characters      = sequence.split("");
-  var containerString = "";
-  var repeatCount     = 1;
+createSequence (sequence) {
+  const characters      = [...sequence];
+  let containerString = "";
+  let repeatCount     = 1;
 
-  for (var i = 0; i < characters.length; i++){
-    var currentChar = characters[i];
-    var prevChar    = characters[i - 1];
-    var nextChar    = characters[i + 1];
+  for (let i = 0; i < characters.length; i++){
+    let currentChar = characters[i];
+    let prevChar    = characters[i - 1];
+    let nextChar    = characters[i + 1];
 
     if (currentChar === prevChar){
       repeatCount++
@@ -17,7 +17,7 @@ LetterSequence.prototype.createSequence = function(sequence){
     // If the sequence is broken, and the repeat count is greater than 1
     // add the letter and the repeat count to the return string
     if (currentChar !== nextChar && repeatCount >= 1){
-      var repeats = repeatCount > 1 ? String(repeatCount) : ""
+      let repeats = repeatCount > 1 ? String(repeatCount) : ""
       containerString += (repeats + currentChar)
       repeatCount = 1;
     }
@@ -26,18 +26,18 @@ LetterSequence.prototype.createSequence = function(sequence){
   return containerString;
 }
 
-LetterSequence.prototype.decodeSequence = function(sequence){
-  var containerString = "";
-  var characters      = sequence.split("");
+decodeSequence (sequence){
+  let containerString = "";
+  const characters      = [...sequence];
 
-  for (var i = 0; i < characters.length; i++){
-    var current         = characters[i];
-    var nextChar        = characters[i + 1];
+  for (let i = 0; i < characters.length; i++){
+    let current         = characters[i];
+    let nextChar        = characters[i + 1];
 
     // If the current character is not a number, then there must be a letter after it
     if (!isNaN(characters[i])){
       // So repeat it n times, and add it to our return value
-      var letters = this._repeat(current, nextChar);
+      let letters = LetterSequence._repeat(current, nextChar);
       containerString += letters;
     // If the current character is a letter, and the last character is a letter, then
     // it must be a lone letter
@@ -51,18 +51,10 @@ LetterSequence.prototype.decodeSequence = function(sequence){
 
 // Maybe there's a function to do this in ES6...?
 
-LetterSequence.prototype._repeat = function(count, character){
-  var characters = "";
+static _repeat (count, character) {
+  return character.repeat(count);
+}
 
-  if (count <= 1){
-    count = 1
-  }
-
-  for (var i = 0; i < count; i++){
-    characters += character;
-  }
-
-  return characters;
 }
 
 module.exports = LetterSequence;
